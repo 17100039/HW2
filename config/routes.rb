@@ -18,6 +18,10 @@ Rails.application.routes.draw do
     collection do
       get 'updateComplete'
       put 'updateCompletely'
+      get 'deleteTitle'
+      put 'deleteTitleMovies'
+      get 'deleteRating'
+      put 'deleteRatingMovies'
     end
   end
   

@@ -24,8 +24,6 @@ class MoviesController < ApplicationController
     puts "In updateCompletely()"
     @input = params[:movie]
     puts @input
-    
-    
     if @movie = Movie.find_by_title(@input[:name])
       puts "Movie does exist"
       if !(@input[:title]=="" && @input[:rating]=="" && @input[:release_date]=="")
@@ -40,6 +38,36 @@ class MoviesController < ApplicationController
       flash[:notice] = "#{@input[:name]} does not exist"
       redirect_to updateComplete_movies_path
     end
+  end
+
+  def deleteTitle
+  end
+
+  def deleteTitleMovies
+    @input = params[:movie]
+    puts @input
+    if @movie = Movie.find_by_title(@input[:title])
+      puts "Movie does exist"
+      @movie.destroy
+      flash[:notice] = "#{@movie.title} was successfully deleted."
+      redirect_to movies_path
+    else
+      flash[:notice] = "#{@input[:title]} does not exist"
+      redirect_to deleteTitle_movies_path
+    end
+  end
+
+  def deleteRating
+  end
+  
+  def deleteRatingMovies
+    @input = params[:movie]
+    puts @input
+    Movie.where(rating: @input[:rating]).each do |mov|
+      mov.destroy
+    end
+    flash[:notice] = "Movies with rating #{@input[:rating]} were successfully deleted."
+    redirect_to movies_path
   end
 
   def new
