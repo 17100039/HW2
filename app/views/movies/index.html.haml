@@ -15,6 +15,12 @@
         %td= movie.rating
         %td= movie.release_date
         %td= link_to "More about #{movie.title}", movie_path(movie)
+        
+= form_tag movies_path, :method => :get do
+  - @all_ratings.each do |rating|
+    = rating
+    = check_box_tag "ratings[#{rating}]", 'yes', @ticked_ratings.include?(rating) ? true : false
+  = submit_tag 'Refresh'
 
 = link_to 'Add new movie', new_movie_path
 = link_to 'Update movie', updateComplete_movies_path
